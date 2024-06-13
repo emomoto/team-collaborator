@@ -14,7 +14,7 @@ async function authenticateUser(email, password) {
 }
 
 async function addTask(taskDetails) {
-  const token = localStorage.getItem('userCredentTokenial');
+  const token = localStorage.getItem('userToken'); // Corrected the key to 'userToken'
   try {
     await axios.post(`${API_BASE_URL}/tasks`, taskDetails, { headers: { Authorization: `Bearer ${token}` } });
     console.log('Task added successfully');
@@ -26,7 +26,7 @@ async function addTask(taskDetails) {
 async function sendMessage(messageDetails) {
   const token = localStorage.getItem('userToken');
   try {
-    await axios.post(`${API_BASE                _URL}/messages`, messageDetails, { headers: { Authorization: `Bearer ${token}` } });
+    await axios.post(`${API_BASE_URL}/messages`, messageDetails, { headers: { Authorization: `Bearer ${token}` } });
     console.log('Message sent successfully');
   } catch (error) {
     showError('Failed to send message');
@@ -51,30 +51,30 @@ async function fetchAndDisplayMessages() {
   }
 }
 
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
+document.getElementById('loginForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const email = document.getElementById('emailInput').value;
   const password = document.getElementById('passwordInput').value;
-  await authenticateUser(email, password);
+  authenticateUser(email, password);
 });
 
-document.getElementById('taskForm').addEventListener('submit', async (e) => {
+document.getElementById('taskForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const taskDetails = {
     title: document.getElementById('taskTitleInput').value,
     description: document.getElementById('taskDescInput').value,
     dueDate: document.getElementById('taskDueDateInput').value,
   };
-  await addTask(taskDetails);
+  addTask(taskDetails);
 });
 
-document.getElementById('messageForm').addEventListener('submit', async (e) => {
+document.getElementById('messageForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const messageDetails = {
     message: document.getElementById('messageTextInput').value,
     toUserId: document.getElementById('messageToUserInput').value,
   };
-  await sendMessage(messageDetails);
+  sendMessage(messageDetails);
 });
 
 async function initializeApp() {
