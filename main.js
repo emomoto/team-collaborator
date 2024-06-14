@@ -9,16 +9,18 @@ async function authenticateUser(email, password) {
     localStorage.setItem('userToken', response.data.token);
     console.log('User authenticated successfully');
   } catch (error) {
+    console.error('Authentication error:', error.response || error); // Log detailed error
     showError('Authentication failed');
   }
 }
 
 async function addTask(taskDetails) {
-  const token = localStorage.getItem('userToken'); // Corrected the key to 'userToken'
+  const token = localStorage.getItem('userToken');
   try {
     await axios.post(`${API_BASE_URL}/tasks`, taskDetails, { headers: { Authorization: `Bearer ${token}` } });
     console.log('Task added successfully');
   } catch (error) {
+    console.error('Add task error:', error.response || error); // Log detailed error
     showError('Failed to add task');
   }
 }
@@ -29,6 +31,7 @@ async function sendMessage(messageDetails) {
     await axios.post(`${API_BASE_URL}/messages`, messageDetails, { headers: { Authorization: `Bearer ${token}` } });
     console.log('Message sent successfully');
   } catch (error) {
+    console.error('Send message error:', error.response || error); // Log detailed error
     showError('Failed to send message');
   }
 }
@@ -38,6 +41,7 @@ async function fetchAndDisplayTasks() {
     const response = await axios.get(`${API_BASE_URL}/tasks`);
     displayTasks(response.data);
   } catch (error) {
+    console.error('Fetch tasks error:', error.response || error); // Log detailed error
     showError('Failed to fetch tasks');
   }
 }
@@ -47,6 +51,7 @@ async function fetchAndDisplayMessages() {
     const response = await axios.get(`${API_BASE_URL}/messages`);
     displayMessages(response.data);
   } catch (error) {
+    console.error('Fetch messages error:', error.response || error); // Log detailed error
     showError('Failed to fetch messages');
   }
 }
