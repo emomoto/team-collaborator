@@ -3,7 +3,13 @@ import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const handleError = (error, customMessage) => {
-  console.error(customMessage, error);
+  if (error.response) {
+    console.error(`${customMessage} - Response Error:`, error.response.data, error.response.status, error.response.headers);
+  } else if (error.request) {
+    console.error(`${customMessage} - Request Error:`, error.request);
+  } else {
+    console.error(`${customMessage} - Setup Error:`, error.message);
+  }
   throw error.response ? error.response.data : new Error(customMessage);
 };
 
@@ -89,7 +95,7 @@ export const updateUser = async (userId, userUpdates) => {
 
 export const deleteUser = async (userId) => {
   try {
-    await axios.delete(`${BASEURL}/users/${userId}`);
+    await axios.delete(`${BASE_URL}/users/${userId}`);
   } catch (error) {
     handleError(error, "Error deleting user");
   }
