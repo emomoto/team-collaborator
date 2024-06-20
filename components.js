@@ -6,9 +6,18 @@ class TeamCollaboratorUI {
   }
 
   static taskList(tasks) {
+    if (!Array.isArray(tasks)) {
+      throw new Error('taskList expects an array of tasks');
+    }
+
     const listElement = document.createElement('ul');
     listElement.className = 'task-list';
+
     tasks.forEach((task) => {
+      if (!task || typeof task.title !== 'string') {
+        console.error('Invalid task object', task);
+        return;
+      }
       const taskElement = document.createElement('li');
       taskElement.textContent = task.title;
       listElement.appendChild(taskElement);
@@ -17,6 +26,10 @@ class TeamCollaboratorUI {
   }
 
   static taskDetails(task) {
+    if (!task || typeof task.title !== 'string' || typeof task.description !== 'string') {
+      throw new Error('Invalid task object. Task must have a title and a description.');
+    }
+
     const detailsElement = document.createElement('div');
     detailsElement.className = 'task-details';
     detailsElement.innerHTML = `<h2>${task.title}</h2><p>${task.description}</p>`;
@@ -24,12 +37,21 @@ class TeamCollaboratorUI {
   }
 
   static messageBoard(messages) {
+    if (!Array.isArray(messages)) {
+      throw new Error('messageBoard expects an array of messages');
+    }
+
     const boardElement = document.createElement('div');
     boardElement.className = 'message-board';
+
     messages.forEach((message) => {
+      if (typeof message !== 'string') {
+        console.error('Invalid message content', message);
+        return; // Skip this message
+      }
       const messageElement = document.createElement('p');
       messageElement.textContent = message;
-      boardElement.appendChild(messageElement);
+      board.SideboardElement.appendChild(messageElement);
     });
     return boardElement;
   }
@@ -46,7 +68,11 @@ class TeamCollaboratorUI {
     `;
     formElement.onsubmit = (e) => {
       e.preventDefault();
-      console.log('Task submitted');
+      if (document.getElementById('taskTitle').value.trim() && document.getElementById('taskDesc').value.trim()) {
+        console.log('Task submitted');
+      } else {
+        console.error('Both Title and Description are required to add a task.');
+      }
     };
     return formElement;
   }
@@ -61,7 +87,11 @@ class TeamCollaboratorUI {
     `;
     formElement.onsubmit = (e) => {
       e.preventDefault();
-      console.log('Message submitted');
+      if (document.getElementById('messageContent').value.trim()) {
+        console.log('Message submitted');
+      } else {
+        console.error('Message content is required.');
+      }
     };
     return formElement;
   }
