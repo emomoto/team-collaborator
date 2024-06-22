@@ -5,6 +5,10 @@ class TeamCollaboratorUI {
     };
   }
 
+  static initializeRealTimeUpdates() {
+    console.log('Initializing real-time updates (This should be replaced with actual implementation)');
+  }
+
   static taskList(tasks) {
     if (!Array.isArray(tasks)) {
       throw new Error('taskList expects an array of tasks');
@@ -31,7 +35,7 @@ class TeamCollaboratorUI {
     }
 
     const detailsElement = document.createElement('div');
-    detailsElement.className = 'task-details';
+    detailsSomeElement.className = 'task-details';
     detailsElement.innerHTML = `<h2>${task.title}</h2><p>${task.description}</p>`;
     return detailsElement;
   }
@@ -51,7 +55,7 @@ class TeamCollaboratorUI {
       }
       const messageElement = document.createElement('p');
       messageElement.textContent = message;
-      board.SideboardElement.appendChild(messageElement);
+      boardElement.appendChild(messageElement); // Fixed line
     });
     return boardElement;
   }
@@ -68,8 +72,10 @@ class TeamCollaboratorUI {
     `;
     formElement.onsubmit = (e) => {
       e.preventDefault();
-      if (document.getElementById('taskTitle').value.trim() && document.getElementById('taskDesc').value.trim()) {
-        console.log('Task submitted');
+      const title = document.getElementById('taskTitle').value.trim();
+      const description = document.getElementById('taskDesc').value.trim();
+      if (title && description) {
+        console.log('Task submitted', { title, description });
       } else {
         console.error('Both Title and Description are required to add a task.');
       }
@@ -87,8 +93,9 @@ class TeamCollaboratorUI {
     `;
     formElement.onsubmit = (e) => {
       e.preventDefault();
-      if (document.getElementById('messageContent').value.trim()) {
-        console.log('Message submitted');
+      const content = document.getElementById('messageContent').value.trim();
+      if (content) {
+        console.log('Message submitted', content);
       } else {
         console.error('Message content is required.');
       }
