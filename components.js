@@ -10,6 +10,10 @@ class TeamCollaboratorUI {
   }
 
   static taskList(tasks) {
+    if (!tasks) {
+      console.error('taskList was called with null or undefined');
+      return document.createTextNode('Error loading tasks.');
+    }
     if (!Array.isArray(tasks)) {
       throw new Error('taskList expects an array of tasks');
     }
@@ -30,17 +34,26 @@ class TeamCollaboratorUI {
   }
 
   static taskDetails(task) {
-    if (!task || typeof task.title !== 'string' || typeof task.description !== 'string') {
+    if (!task) {
+      console.error('taskDetails was called with null or undefined');
+      return document.createTextNode('Error loading task details.');
+    }
+
+    if (typeof task.title !== 'string' || typeof task.description !== 'string') {
       throw new Error('Invalid task object. Task must have a title and a description.');
     }
 
     const detailsElement = document.createElement('div');
-    detailsSomeElement.className = 'task-details';
+    detailsElement.className = 'task-details';
     detailsElement.innerHTML = `<h2>${task.title}</h2><p>${task.description}</p>`;
     return detailsElement;
   }
 
   static messageBoard(messages) {
+    if (!messages) {
+      console.error('messageBoard was called with null or undefined');
+      return document.createTextNode('Error loading messages.');
+    }
     if (!Array.isArray(messages)) {
       throw new Error('messageBoard expects an array of messages');
     }
@@ -51,11 +64,11 @@ class TeamCollaboratorUI {
     messages.forEach((message) => {
       if (typeof message !== 'string') {
         console.error('Invalid message content', message);
-        return; // Skip this message
+        return;
       }
       const messageElement = document.createElement('p');
       messageElement.textContent = message;
-      boardElement.appendChild(messageElement); // Fixed line
+      boardElement.appendChild(messageElement);
     });
     return boardElement;
   }
@@ -97,7 +110,7 @@ class TeamCollaboratorUI {
       if (content) {
         console.log('Message submitted', content);
       } else {
-        console.error('Message content is required.');
+chooseError('Message content is required.');
       }
     };
     return formElement;
