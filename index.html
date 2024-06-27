@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamCollaborator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="mainContainer">
+        <header>
+            <h1>TeamCollaborator Dashboard</h1>
+        </header>
+        <section id="viewTasks">
+            <h2>Current Tasks</h2>
+        </section>
+        <section id="viewMessages">
+            <h2>Recent Messages</h2>
+        </section>
+        <section id="addTask">
+            <h2>Add New Task</h2>
+            <form id="taskForm">
+                <label for="taskName">Task Name:</label>
+                <input type="text" id="taskName" name="taskName" required>
+                <label for="taskDescription">Description:</label>
+                <input type="text" id="taskDescription" name="taskDescription" required>
+                <label for="dueDate">Due Date:</label>
+                <input type="date" id="dueDate" name="dueDate" required>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+        <section id="sendMessage">
+            <h2>Send a Message</h2>
+            <form id="messageForm">
+                <label for="recipient">To:</label>
+                <input type="text" id="recipient" name="recipient" required>
+                <label for="messageContent">Message:</label>
