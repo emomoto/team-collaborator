@@ -16,6 +16,8 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 def manage_tasks():
     if request.method == 'POST':
         task = request.json
+        if not task.get('id'):
+            return jsonify({'error': 'Missing task id'}), 400
         tasks.append(task)
         return jsonify(task), 201
 
@@ -24,6 +26,8 @@ def manage_tasks():
 
     elif request.method == 'PUT':
         updated_task = request.json
+        if not updated_task.get('id'):
+            return jsonify({'error': 'Missing task id'}), 400
         for task in tasks:
             if task['id'] == updated_task['id']:
                 task.update(updated_task)
@@ -32,6 +36,8 @@ def manage_tasks():
 
     elif request.method == 'DELETE':
         task_id = request.args.get('id')
+        if not task_id:
+            return jsonify({'error': 'Missing task id'}), 400
         for task in tasks:
             if task['id'] == task_id:
                 tasks.remove(task)
@@ -42,6 +48,8 @@ def manage_tasks():
 def manage_messages():
     if request.method == 'POST':
         message = request.json
+        if not message.get('id'):
+            return jsonify({'error': 'Missing message id'}), 400
         messages.append(message)
         return jsonify(message), 201
 
@@ -50,6 +58,8 @@ def manage_messages():
 
     elif request.method == 'DELETE':
         message_id = request.args.get('id')
+        if not message_id:
+            return jsonify({'error': 'Missing message id'}), 400
         for message in messages:
             if message['id'] == message_id:
                 messages.remove(message)
@@ -60,6 +70,8 @@ def manage_messages():
 def manage_users():
     if request.method == 'POST':
         user = request.json
+        if not user.get('id'):
+            return jsonify({'error': 'Missing user id'}), 400
         users.append(user)
         return jsonify(user), 201
 
@@ -68,6 +80,8 @@ def manage_users():
 
     elif request.method == 'PUT':
         updated_user = request.json
+        if not updated_user.get('id'):
+            return jsonify({'error': 'Missing user id'}), 400
         for user in users:
             if user['id'] == updated_user['id']:
                 user.update(updated_user)
@@ -76,6 +90,8 @@ def manage_users():
 
     elif request.method == 'DELETE':
         user_id = request.args.get('id')
+        if not user_id:
+            return jsonify({'error': 'Missing user id'}), 400
         for user in users:
             if user['id'] == user_id:
                 users.remove(user)
