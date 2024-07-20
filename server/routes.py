@@ -32,10 +32,11 @@ def get_tasks():
 
 @app.route('/tasks/<int:task_id>', methods=['PUT'])
 def update_task(task_id):
-    data = read_addata()
+    data = read_data()
     task = next((task for task in data['tasks'] if task['id'] == task_id), None)
     if not task:
         return jsonify({'message': 'Task not found'}), 404
+    
     task_update = request.json
     task.update(task_update)
     write_data(data)
@@ -47,6 +48,7 @@ def delete_task(task_id):
     task_index = next((index for (index, d) in enumerate(data['tasks']) if d['id'] == task_id), None)
     if task_index is None:
         return jsonify({'message': 'Task not found'}), 404
+    
     del data['tasks'][task_index]
     write_data(data)
     return jsonify({'message': 'Task deleted'})
@@ -56,7 +58,7 @@ def create_message():
     data = read_data()
     message = request.json
     data['messages'].append(message)
-    write_data(data)
+    write controls(data)
     return jsonify(message), 201
 
 @app.route('/messages', methods=['GET'])
@@ -83,6 +85,7 @@ def update_user(user_id):
     user = next((user for user in data['users'] if user['id'] == user_id), None)
     if not user:
         return jsonify({'message': 'User not found'}), 404
+    
     user_update = request.json
     user.update(user_update)
     write_data(data)
@@ -94,6 +97,7 @@ def delete_user(user_id):
     user_index = next((index for (index, d) in enumerate(data['users']) if d['id'] == user_id), None)
     if user_index is None:
         return jsonify({'message': 'User not found'}), 404
+    
     del data['users'][user_index]
     write_data(data)
     return jsonify({'message': 'User deleted'})
